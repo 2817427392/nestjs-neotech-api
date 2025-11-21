@@ -1,0 +1,137 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url = env("DATABASE_URL")
+}
+
+model Administrator{
+  id String @id @default(uuid())
+  name String @db.VarChar(256)
+  email String @db.VarChar(320)
+  password String
+
+  telephoneRelation TelephoneRelation[]
+}
+
+model Plan {
+  id String @id @default(uuid())
+  name String @db.VarChar(40)
+  annualPrice Decimal @db.Money
+  monthlyPrice Decimal @db.Money
+  totalUsers Int
+  hasPdfReports Boolean @default(false)
+  hasExcelReports Boolean @default(false)
+  hasCsvReports Boolean @default(false)
+  hasStockRedirection Boolean @default(false)
+  hasPrioritySuport Boolean @default(false)
+
+  signatures   Signature[]
+}
+
+model Signature {
+  id String @id @default(uuid())
+  
+  planId String
+  plan Plan @relation(fields: [planId], references: [id])
+
+  businessId String
+  business Business @relation(fields: [businessId], references: [id])
+
+  startDate DateTime
+  endDate DateTime
+
+  paymentMethod String
+
+  isActive Boolean @default(true)
+}
+
+model Business{
+  id String @id @default(uuid())
+  cnpj String @db.Char(14)
+  name String @db.VarChar(256)
+  email String @db.VarChar(320)
+  password String
+  registrationDate DateTime @default(now())
+
+  telephoneRelation TelephoneRelation[]
+  signatures        Signature[]
+  unities           Unity[]  
+}
+
+model Unity{
+  id String @id @default(uuid())
+  cnpj String @db.Char(14)
+  name String @db.VarChar(256)
+  email String @db.VarChar(256)
+  country String @db.VarChar(256)
+  state String @db.VarChar(256)
+  city String @db.VarChar(256)
+  neighbourhood String @db.VarChar(256)
+  subRegion String @db.VarChar(256)
+  street String @db.VarChar(512)
+  number Int
+
+  businessId String
+  business Business @relation(fields: [businessId], references: [id])
+
+  telephoneRelation TelephoneRelation[]
+  sectors           Sector[]
+}
+
+model Sector{
+  id String @id @default(uuid())
+  name String @db.VarChar(256)
+  descricao String
+
+  unityId String
+  unity Unity @relation(fields: [unityId], references: [id])
+
+  telephoneRelation TelephoneRelation[]
+  employees         Employee[]
+}
+
+model Employee{
+  id String @id @default(uuid())
+  name String @db.VarChar(256)
+  position Int 
+  email String @db.VarChar(320)
+  password String
+
+  sectorId String
+  sector Sector @relation(fields: [sectorId], references: [id])
+
+  telephoneRelation TelephoneRelation[]
+}
+
+model Telephone{
+  id String @id @default(uuid())
+  number String 
+  
+  relations TelephoneRelation[]
+}
+
+model TelephoneRelation{
+  id String @id @default(uuid())
+  type String @db.Char(1) // 'A', 'F', 'E', 'U'
+  
+  telephone Telephone @relation(fields: [telephoneId], references: [id])
+  telephoneId String
+
+  administrator   Administrator? @relation(fields: [administratorId], references: [id])
+  administratorId String?
+
+  business   Business? @relation(fields: [businessId], references: [id])
+  businessId String?
+
+  unity   Unity? @relation(fields: [unityId], references: [id])
+  unityId String?
+
+  sector   Sector? @relation(fields: [sectorId], references: [id])
+  sectorId String?
+
+  employee   Employee? @relation(fields: [employeeId], references: [id])
+  employeeId String?
+}

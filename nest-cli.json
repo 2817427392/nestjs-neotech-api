@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "apps/neotech-api/src",
+  "compilerOptions": {
+    "deleteOutDir": true,
+    "webpack": true,
+    "tsConfigPath": "apps/neotech-api/tsconfig.app.json"
+  },
+  "monorepo": true,
+  "root": "apps/neotech-api",
+  "projects": {
+    "administrator-api": {
+      "type": "application",
+      "root": "apps/administrator-api",
+      "entryFile": "main",
+      "sourceRoot": "apps/administrator-api/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/administrator-api/tsconfig.app.json"
+      }
+    },
+    "auth-api": {
+      "type": "application",
+      "root": "apps/auth-api",
+      "entryFile": "main",
+      "sourceRoot": "apps/auth-api/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/auth-api/tsconfig.app.json"
+      }
+    },
+    "business-api": {
+      "type": "application",
+      "root": "apps/business-api",
+      "entryFile": "main",
+      "sourceRoot": "apps/business-api/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/business-api/tsconfig.app.json"
+      }
+    },
+    "neotech-api": {
+      "type": "application",
+      "root": "apps/neotech-api",
+      "entryFile": "main",
+      "sourceRoot": "apps/neotech-api/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/neotech-api/tsconfig.app.json"
+      }
+    }
+  }
+}
