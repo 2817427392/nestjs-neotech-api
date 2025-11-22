@@ -30,7 +30,7 @@ export class CreatePlanService{
         annualPrice: input.annualPrice,
         monthlyPrice: input.monthlyPrice,
         totalUsers: input.totalUsers,
-        hasStockRedirection: input.hasStockRediretion,
+        hasStockRedirection: input.hasStockRedirection,
         hasPdfReports: input.hasPdfReports,
         hasCsvReports: input.hasCsvReports,
         hasExcelReports: input.hasExcelReports,

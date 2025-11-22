@@ -4,7 +4,12 @@ import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AdministratorApiModule);
-  app.useGlobalPipes(new ValidationPipe())
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+      whitelist: true,
+    })
+  )
   app.setGlobalPrefix('api/admin');
   await app.listen(3001);
   console.log('Administrator API rodando em http://localhost:3001');

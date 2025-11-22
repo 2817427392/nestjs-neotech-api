@@ -1,25 +1,31 @@
 import { Transform, Type } from "class-transformer";
-import { IsBoolean, IsInt, IsNotEmpty, IsNumber, IsOptional, IsString, MaxLength, Min, MinLength } from "class-validator";
+import { IsBoolean, IsInt, IsNotEmpty, IsNumber, IsOptional, IsString, IsUUID, MaxLength, Min, MinLength } from "class-validator";
 
-export class CreatePlanRequestDTO{
+export class UpdatePlanInputDTO{
+  @IsUUID()
   @IsString()
   @IsNotEmpty()
+  @Transform(({ value }) => value?.trim())
+  public id: string;
+
+  @IsString()
+  @IsOptional()
   @MaxLength(40)
   @MinLength(3)
   @Transform(({ value }) => value?.trim().toLowerCase())
-  public name: string;
+  public name?: string;
 
   @IsNumber()
-  @IsNotEmpty()
+  @IsOptional()
   @Min(0)
   @Type(() => Number)
-  public annualPrice: number;
+  public annualPrice?: number;
 
   @IsNumber()
-  @IsNotEmpty()
+  @IsOptional()
   @Min(0)
   @Type(() => Number)
-  public monthlyPrice: number;
+  public monthlyPrice?: number;
 
   @IsOptional()
   @IsBoolean()
@@ -31,7 +37,7 @@ export class CreatePlanRequestDTO{
 
   @IsOptional()
   @IsBoolean()
-  @Transform(({ value }) => {
+   @Transform(({ value }) => {
     if (typeof value === "boolean") return value;
     return String(value).trim().toLowerCase() === "true";
   })  
@@ -62,8 +68,8 @@ export class CreatePlanRequestDTO{
   public hasPrioritySuport?: boolean = false;
 
   @IsInt()
-  @IsNotEmpty()
+  @IsOptional()
   @Min(0)
   @Type(() => Number)
-  public totalUsers: number;
+  public totalUsers?: number;
 }

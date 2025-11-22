@@ -11,7 +11,7 @@ export class FindPlanByIdController{
 
   @HttpCode(HttpStatus.OK)
   @Get(':id')
-  public async execute(
+  public async handle(
     @Param()
     params : FindPlanByIdRouteParamsDTO 
   ): Promise<FindPlanByIdOutputDTO>{

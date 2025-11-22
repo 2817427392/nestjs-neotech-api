@@ -1,7 +1,7 @@
 import { Transform } from "class-transformer";
 import { IsNotEmpty, IsString, IsUUID } from "class-validator";
 
-export class FindPlanByIdInputDTO{
+export class DeletePlanInputDTO{
   @IsUUID()
   @IsString()
   @IsNotEmpty()
