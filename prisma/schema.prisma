@@ -9,6 +9,7 @@ datasource db {
 
 model Administrator{
   id String @id @default(uuid())
+  cpf String? @db.VarChar(11) @unique
   name String @db.VarChar(256)
   email String @db.VarChar(320)
   password String
@@ -18,7 +19,7 @@ model Administrator{
 
 model Plan {
   id String @id @default(uuid())
-  name String @db.VarChar(40)
+  name String @db.VarChar(40) @unique
   annualPrice Decimal @db.Money
   monthlyPrice Decimal @db.Money
   totalUsers Int
@@ -50,9 +51,9 @@ model Signature {
 
 model Business{
   id String @id @default(uuid())
-  cnpj String @db.Char(14)
+  cnpj String @db.Char(14) @unique
   name String @db.VarChar(256)
-  email String @db.VarChar(320)
+  email String @db.VarChar(320) @unique
   password String
   registrationDate DateTime @default(now())
 
@@ -63,7 +64,7 @@ model Business{
 
 model Unity{
   id String @id @default(uuid())
-  cnpj String @db.Char(14)
+  cnpj String @db.Char(14) @unique
   name String @db.VarChar(256)
   email String @db.VarChar(256)
   country String @db.VarChar(256)
@@ -95,9 +96,10 @@ model Sector{
 
 model Employee{
   id String @id @default(uuid())
+  cpf String? @db.VarChar(11) @unique
   name String @db.VarChar(256)
   position Int 
-  email String @db.VarChar(320)
+  email String @db.VarChar(320) @unique
   password String
 
   sectorId String
@@ -108,7 +110,7 @@ model Employee{
 
 model Telephone{
   id String @id @default(uuid())
-  number String 
+  number String @unique
   
   relations TelephoneRelation[]
 }

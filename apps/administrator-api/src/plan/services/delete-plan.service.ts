@@ -1,30 +1,25 @@
-import { ConflictException, Injectable } from "@nestjs/common";
+import { ConflictException, Injectable, NotFoundException } from "@nestjs/common";
 import { PrismaService } from "shared/database/services/prisma.service";
 import { DeletePlanInputDTO } from "../dto/io/delete-plan-input.dto";
 import { DeletePlanOutputDTO } from "../dto/io/delete-plan-output.dto";
+import { FindPlanByIdService } from "./find-plan-by-id.service";
 
 @Injectable()
 export class DeletePlanService{
   constructor(
-    private readonly prismaService: PrismaService
+    private readonly prismaService: PrismaService,
+    private readonly findPlanByIdService: FindPlanByIdService,
   ){}
 
   public async execute(
     { id } : DeletePlanInputDTO 
   ): Promise<DeletePlanOutputDTO>{
-    const plan = await this.prismaService.plan.findFirst({
-      where: {
-        id
-      },
-      select: {
-        name: true,
-        totalUsers: true,
-        annualPrice: true,
-        monthlyPrice: true,
-      }
-    });
+    const count = await this.prismaService.plan.count()
+    const plan = await this.findPlanByIdService.execute({ id });
 
-    if (!plan) throw new ConflictException('Plano com esse id não existe');
+    if (!plan) throw new NotFoundException('Plano com esse id não existe');
+
+    if (count === 1) throw new ConflictException('Não é possível deletar todos os planos');
 
     await this.prismaService.signature.updateMany({
       where: {
@@ -41,10 +36,6 @@ export class DeletePlanService{
       }
     })
 
-    return {
-      ...plan,
-      annualPrice: Number(plan.annualPrice),
-      monthlyPrice: Number(plan.monthlyPrice),
-    }
+    return plan;
   }
 }
