@@ -9,6 +9,12 @@ import { DeleteAdministratorService } from "./services/delete-administrator.serv
 import { FindAdministratorByCpfController } from "./controllers/find-administrator-by-cpf.controller";
 import { FindAdministratorByCpfService } from "./services/find-administrator-by-cpf.service";
 import { FindAdministratorByEmailService } from "./services/find-administrator-by-email.service";
+import { UpdateAdministratorEmailController } from "./controllers/update-administrator-email.controller";
+import { UpdateAdministratorEmailService } from "./services/update-administrator-email.service";
+import { UpdateAdministratorService } from "./services/update-administrator.service";
+import { UpdateAdministratorController } from "./controllers/update-administrador.controller";
+import { UpdateAdministratorPasswordService } from "./services/update-administrator-password.service";
+import { UpdateAdministratorPasswordController } from "./controllers/update-administrator-password.controller";
 
 @Module({
   imports: [DatabaseModule],
@@ -17,6 +23,9 @@ import { FindAdministratorByEmailService } from "./services/find-administrator-b
     DeleteAdministratorController,
     FindAdministratorByIdController,
     FindAdministratorByCpfController,
+    UpdateAdministratorController,
+    UpdateAdministratorEmailController,
+    UpdateAdministratorPasswordController,
   ],
   providers: [
     CreateAdministratorService,
@@ -24,6 +33,9 @@ import { FindAdministratorByEmailService } from "./services/find-administrator-b
     FindAdministratorByIdService,
     FindAdministratorByCpfService,
     FindAdministratorByEmailService,
+    UpdateAdministratorService,
+    UpdateAdministratorEmailService,
+    UpdateAdministratorPasswordService,
   ],
   exports: [
     FindAdministratorByEmailService,

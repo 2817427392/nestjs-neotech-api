@@ -23,6 +23,8 @@ export class CreateAdministratorInput{
   @Transform(({ value }) => value.trim().toLowerCase())
   public email: string;
 
+  @IsString()
+  @IsNotEmpty()
   @Matches(
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_])[A-Za-z\d@$!%*?&_]{8,}$/,
     { message: "A senha deve ter mínimo 8 caracteres, contendo maiúscula, minúscula, número e símbolo." }

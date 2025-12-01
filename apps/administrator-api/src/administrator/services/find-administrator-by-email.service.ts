@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { PrismaService } from "shared/database/services/prisma.service";
 import { FindAdministratorByEmailInputDTO } from "../dto/io/find-administrator-by-email-input.dto";
-import { FindAdministratorByEmailOutputDTO } from "../dto/io/find-administrator-by-email-output.dto"; 
+import { FindAdministratorByEmailOutputDTO } from "../dto/io/find-administrator-by-email-output.dto";
 
 @Injectable()
 export class FindAdministratorByEmailService{
@@ -24,6 +24,8 @@ export class FindAdministratorByEmailService{
         password: true,
       },
     });
+
+    if (!administrador) throw new NotFoundException('Email não encontrado');
 
     return administrador; 
   }

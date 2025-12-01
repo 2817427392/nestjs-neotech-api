@@ -4,4 +4,4 @@ export type FindAdministratorByEmailOutputDTO = {
   name: string;
   email: string;
   password: string;
-} | null
+}
