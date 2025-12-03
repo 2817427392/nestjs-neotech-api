@@ -9,16 +9,25 @@ import { FindAdministratorByIdService } from "./find-administrator-by-id.service
 export class UpdateAdministratorEmailService{
   constructor(
     private readonly prismaService: PrismaService,
-    private readonly findAdministratorByEmail: FindAdministratorByEmailService,
     private readonly findAdministratorById: FindAdministratorByIdService,
   ){}
 
   public async execute(
-    { email, id }: UpdateAdministratorEmailInputDTO,
+    { email, user: { id, email: userEmail } }: UpdateAdministratorEmailInputDTO,
   ): Promise<AdministratorOutputDTO>{
     await this.findAdministratorById.execute({ id });
 
-    const administratorWithSameEmail = await this.findAdministratorByEmail.execute({ email });
+    if (email === userEmail) throw new ConflictException('Não é possível alterar um e-mail para o mesmo');
+
+    const administratorWithSameEmail = await this.prismaService.administrator.findFirst({
+      where: {
+        email,
+      },
+      select: {
+        id: true,
+        name: true,
+      }
+    })
 
     if (administratorWithSameEmail) throw new ConflictException('Email já cadastrado');
 

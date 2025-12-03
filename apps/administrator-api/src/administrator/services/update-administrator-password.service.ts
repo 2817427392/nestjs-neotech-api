@@ -13,7 +13,7 @@ export class UpdateAdministratorPasswordService{
   ){}
 
   public async execute(
-    { id, password }: UpdateAdministradorPasswordInputDTO
+    { password, user: { id } }: UpdateAdministradorPasswordInputDTO,
   ): Promise<AdministratorOutputDTO>{ 
     await this.findAdministratorByIdService.execute({ id });
 

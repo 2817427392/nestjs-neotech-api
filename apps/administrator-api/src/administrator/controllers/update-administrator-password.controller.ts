@@ -2,28 +2,25 @@ import { CurrentUser } from "apps/auth-api/src/auth/decorators/current-user.deco
 import { AdministratorOutputDTO } from "../dto/io/administrator-output.dto";
 import { UpdateAdministratorPasswordService } from "../services/update-administrator-password.service";
 import type { AuthenticatedUser } from "apps/auth-api/src/auth/interfaces/authenticated-user.interface";
-import { Body, Controller, HttpCode, HttpStatus, Patch, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, HttpCode, HttpStatus, Patch, UseGuards } from "@nestjs/common";
 import { UpdateAdministratorPasswordRequestDTO } from "../dto/request/update-administrator-password-request.dto";
 import { JwtAuthGuard } from "apps/auth-api/src/auth/jwtStrategy/jwt-auth.guard";
 import { AdminGuard } from "apps/auth-api/src/auth/guards/admin.guard";
 
-@Controller()
+@Controller("/password")
 export class UpdateAdministratorPasswordController{
   constructor(
-    private readonly updateAdministratorPasswordService: UpdateAdministratorPasswordService,
   ){}
 
   @UseGuards(JwtAuthGuard, AdminGuard)
   @HttpCode(HttpStatus.OK)
-  @Patch('/email')
+  @Patch()
   public async handle(
     @Body()
     { password }: UpdateAdministratorPasswordRequestDTO, 
     @CurrentUser()
-    { id }: AuthenticatedUser,
-  ): Promise<AdministratorOutputDTO>{
-    const result = await this.updateAdministratorPasswordService.execute({ password, id });
-
-    return result;
+    user: AuthenticatedUser,
+  ): Promise<any>{
+    console.log("teste")
   }
 }

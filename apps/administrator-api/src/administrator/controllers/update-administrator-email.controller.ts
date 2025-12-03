@@ -5,8 +5,9 @@ import { CurrentUser } from "apps/auth-api/src/auth/decorators/current-user.deco
 import type { AuthenticatedUser } from "apps/auth-api/src/auth/interfaces/authenticated-user.interface";
 import { UpdateAdministratorEmailService } from "../services/update-administrator-email.service";
 import { UpdateAdministratorEmailRequestDTO } from "../dto/request/update-administrator-email-request.dto";
+import { AdministratorOutputDTO } from "../dto/io/administrator-output.dto";
 
-@Controller()
+@Controller("/email")
 export class UpdateAdministratorEmailController{
   constructor(
     private readonly updateAdministratorEmailService: UpdateAdministratorEmailService,
@@ -14,14 +15,14 @@ export class UpdateAdministratorEmailController{
 
   @UseGuards(JwtAuthGuard, AdminGuard)
   @HttpCode(HttpStatus.OK)
-  @Patch('/email')
+  @Patch()
   public async handle(
     @Body()
     { email }: UpdateAdministratorEmailRequestDTO, 
     @CurrentUser()
     user: AuthenticatedUser,
-  ){
-    const result = await this.updateAdministratorEmailService.execute({ id: user.id, email});
+  ): Promise<AdministratorOutputDTO>{
+    const result = await this.updateAdministratorEmailService.execute({ email, user });
 
     return result;
   }

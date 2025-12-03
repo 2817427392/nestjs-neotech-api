@@ -12,24 +12,28 @@ import { FindAdministratorByEmailService } from "./services/find-administrator-b
 import { UpdateAdministratorEmailController } from "./controllers/update-administrator-email.controller";
 import { UpdateAdministratorEmailService } from "./services/update-administrator-email.service";
 import { UpdateAdministratorService } from "./services/update-administrator.service";
-import { UpdateAdministratorController } from "./controllers/update-administrador.controller";
 import { UpdateAdministratorPasswordService } from "./services/update-administrator-password.service";
 import { UpdateAdministratorPasswordController } from "./controllers/update-administrator-password.controller";
+import { FindManyAdministratorsService } from "./services/find-many-administrators.service";
+import { FindManyAdministratorsController } from "./controllers/find-many-administrators.controller";
+import { UpdateAdministratorController } from "./controllers/update-administrator.controller";
 
 @Module({
   imports: [DatabaseModule],
   controllers: [
     CreateAdministratorController,
     DeleteAdministratorController,
+    FindManyAdministratorsController,
     FindAdministratorByIdController,
     FindAdministratorByCpfController,
-    UpdateAdministratorController,
-    UpdateAdministratorEmailController,
     UpdateAdministratorPasswordController,
+    UpdateAdministratorEmailController,
+    UpdateAdministratorController,
   ],
   providers: [
     CreateAdministratorService,
     DeleteAdministratorService,
+    FindManyAdministratorsService,
     FindAdministratorByIdService,
     FindAdministratorByCpfService,
     FindAdministratorByEmailService,

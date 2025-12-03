@@ -56,7 +56,6 @@ export class UpdateAdministratorService{
         cpf: true,
         name: true,
         email: true,
-        password: true,
       },     
     })
   }
