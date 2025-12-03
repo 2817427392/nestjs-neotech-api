@@ -6,8 +6,12 @@ async function bootstrap() {
   const app = await NestFactory.create(AdministratorApiModule);
   app.useGlobalPipes(
     new ValidationPipe({
-      transform: true,
       whitelist: true,
+      forbidNonWhitelisted: false,
+      transform: true,
+      transformOptions: {
+        enableImplicitConversion: true,
+      }
     })
   )
   app.setGlobalPrefix('api/admin');

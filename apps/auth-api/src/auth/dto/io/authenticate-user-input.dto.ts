@@ -7,7 +7,7 @@ export class AuthenticateUserInput{
   @IsEmail()
   @MaxLength(320)
   @Transform(({ value }) => value?.trim().toLowerCase())
-  public  email: string;
+  public email: string;
 
   @IsString()
   @IsNotEmpty()

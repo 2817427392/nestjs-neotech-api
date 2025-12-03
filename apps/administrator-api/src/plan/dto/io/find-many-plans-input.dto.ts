@@ -5,6 +5,7 @@ export class FindManyPlansInputDTO{
   @IsInt()
   @Min(0)
   @IsOptional()
+  @Type(() => Number)
   skip?: number = 0;
 
   @IsInt()
